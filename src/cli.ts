@@ -1,5 +1,7 @@
 /**
- * Main entry point for the CLI. Sets up command line and kicks off the agent loop.
+ * Main entry point for the CLI.
+ *
+ * Sets up command line and kicks off the agent loop.
  */
 import { Command } from "commander";
 import { inputLoop } from "./libs/main";
@@ -15,14 +17,13 @@ program
 
 program.command("run").action(() => {
   const llm = new OpenAiLlm();
-  inputLoop.start(llm, {
+  inputLoop.start(llm, tools, {
     system: `"You are an assistant (named Maude) that helps with code generation and management. 
                 You can call tools to interact with the file system and run code.
                 Be concise but clear in your responses.
                 Only offer help for tasks within your capabilities; use your tools to understand your abilities.
                 Only answer questions that are relevant to coding tasks. If asked an unrelated question, shrug at them.
             `,
-    tools: tools.map((tool) => tool.definition),
   });
 });
 
