@@ -7,7 +7,7 @@ A tiny, WIP, kinda-agentic AI CLI tool to help with development. Trying to creat
 
 ## Usage
 
-I haven't put this on NPM. To run this locally like you would Claude Code:
+To run this locally like you would Claude Code:
 
 1. Clone this repo
 2. Build the package with
