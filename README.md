@@ -1,6 +1,6 @@
 # Maude Code
 
-A tiny, WIP, Agentic AI CLI tool to help with development. Trying to create my own
+A tiny, WIP, kinda-agentic AI CLI tool to help with development. Trying to create my own
 ~~Claude~~ Code from scratch. Shoutout Maude Apatow for name inspiration.
 
 ![alt text](image.png)
