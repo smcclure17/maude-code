@@ -65,6 +65,10 @@ export const inputLoop = {
             const parsed = tool.schema.parse(toolCall.input);
             const output = await tool.execute(parsed);
             messages.push(msg.toolResult(output, toolCall.id));
+            ui.tool(
+              tool.definition.name,
+              `tool output: ${output.slice(0, 100)}`,
+            );
           }
 
           await agentLoop(); // keep agent running until we find a text response

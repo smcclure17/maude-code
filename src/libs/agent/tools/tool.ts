@@ -18,7 +18,7 @@ export function defineTool<T extends z.ZodObject<z.ZodRawShape>>(config: {
     definition: {
       name: config.name,
       description: config.description,
-      input_schema: z.toJSONSchema(config.schema),
+      parameters: z.toJSONSchema(config.schema),
     },
     execute: config.execute,
   };

@@ -15,7 +15,7 @@ export class OpenAiLlm implements Llm {
       function: {
         name: t.name,
         description: t.description,
-        parameters: t.input_schema,
+        parameters: t.parameters,
       },
     }));
 

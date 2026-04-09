@@ -8,6 +8,7 @@
   "scripts": {
     "test": "test",
     "build": "esbuild src/cli.ts --bundle --platform=node --target=node22 --outfile=dist/maude.js --banner:js='#!/usr/bin/env node' --sourcemap",
+    "postbuild": "node scripts/copy-rg.js",
     "dev": "tsx src/cli.ts run",
     "format": "npx prettier . --write",
     "lint": "npx eslint src/"
@@ -19,7 +20,8 @@
     "chalk": "^5.6.2",
     "commander": "^14.0.3",
     "openai": "^6.34.0",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "@vscode/ripgrep": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

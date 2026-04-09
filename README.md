@@ -13,7 +13,7 @@ To run this locally like you would Claude Code:
 2. Build the package with
 
    ```bash
-   npm ci && npm run build
+   npm ci && npm run build && npm run postbuild
    ```
 
 3. Link the package locally

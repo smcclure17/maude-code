@@ -29,7 +29,7 @@ export const msg = {
 export interface ToolDefinition {
   name: string;
   description: string;
-  input_schema: Record<string, unknown>;
+  parameters: Record<string, unknown>;
 }
 
 export interface ToolCall {
