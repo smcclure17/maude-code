@@ -7,7 +7,7 @@ A tiny, WIP, Agentic AI CLI tool to help with development. Trying to create my o
 
 ## Usage
 
-To run this locally like you would Claude Code
+I haven't put this on NPM. To run this locally like you would Claude Code:
 
 1. Clone this repo
 2. Build the package with
@@ -23,7 +23,7 @@ To run this locally like you would Claude Code
      npm link
      ```
 
-   - Then, in the terminal/directory you want to use this in, run
+   - Then, in the terminal/directory you want to use this in (e.g, your code project), run
 
      ```bash
      npm link maude
