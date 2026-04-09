@@ -44,7 +44,7 @@ export type LlmResponse =
 
 export interface LlmOptions {
   system?: string;
-  tools?: ToolDefinition[];
+  tools: ToolDefinition[];
   maxTokens?: number;
 }
 

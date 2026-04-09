@@ -7,7 +7,7 @@ export class OpenAiLlm implements Llm {
 
   async chat(
     messages: Message[],
-    options: LlmOptions = {},
+    options: LlmOptions = { tools: [] },
   ): Promise<LlmResponse> {
     // map tools to OpenAI function format
     const tools = options.tools?.map((t) => ({

@@ -1,47 +1,47 @@
 /**
- * Main agent loop and entry point for the REPL.
+ * Main agent loop and entry point for the main agent loop.
  *
  * This is where the agent interacts with the LLM and tools.
  */
 
-import { start } from "node:repl";
 import {
   msg,
   type Llm,
   type LlmOptions,
   type Message,
 } from "./agent/llm-helpers";
-import { tools } from "./agent/tools/tools";
+import { tools as globalTools } from "./agent/tools/tools";
 import { ui } from "./ui";
+import { createInterface } from "node:readline/promises";
 
 export const inputLoop = {
-  start(llm: Llm, options: LlmOptions = {}) {
+  async start(llm: Llm, options: LlmOptions = { tools: [] }) {
     const messages: Message[] = [];
-    const optionsWithTools = {
-      ...options,
-      tools: options.tools || tools.map((tool) => tool.definition),
-    };
+
+    const readline = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
 
     ui.reply(
       "Hi! I'm a pretty boring coding assistant. Start asking me questions >:)",
     );
 
-    async function agentLoop(
-      done: (err: Error | null, result: unknown) => void,
-    ) {
-      const response = await llm.chat(messages, optionsWithTools);
+    async function agentLoop() {
+      const response = await llm.chat(messages, options);
 
       switch (response.type) {
         case "text":
           messages.push(msg.assistant(response.content));
           ui.reply(response.content);
-          done(null, undefined);
           break;
 
         case "tool_call":
           messages.push(msg.toolCall("", response.toolCalls));
           for (const toolCall of response.toolCalls) {
-            const tool = tools.find((t) => t.definition.name === toolCall.name);
+            const tool = globalTools.find(
+              (t) => t.definition.name === toolCall.name,
+            );
             if (!tool) {
               messages.push(
                 msg.toolResult(
@@ -59,27 +59,24 @@ export const inputLoop = {
             messages.push(msg.toolResult(output, toolCall.id));
           }
 
-          await agentLoop(done); // keep agent running until we find a text response
+          await agentLoop(); // keep agent running until we find a text response
           break;
       }
     }
-    start({
-      prompt: "> ",
-      async eval(raw, _ctx, _file, done) {
-        const input = raw.trim();
-        if (!input) {
-          done(null, undefined);
-          return;
-        }
 
-        messages.push(msg.user(input));
+    // Run the loop: get user input, send to LLM, execute tools, repeat.
+    while (true) {
+      const input = (await readline.question("> ")).trim();
+      if (!input) continue;
+      if (input === ".exit") break;
 
-        const spinner = ui.thinking();
-        await agentLoop(done);
-        spinner.stop();
-        process.stdout.write("> "); // re-render prompt after spinner stops, since it clears the line
-      },
-      writer: () => "",
-    });
+      messages.push(msg.user(input));
+
+      const spinner = ui.thinking();
+      await agentLoop();
+      spinner.stop();
+    }
+
+    readline.close();
   },
 };

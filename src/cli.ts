@@ -4,6 +4,7 @@
 import { Command } from "commander";
 import { inputLoop } from "./libs/main";
 import { OpenAiLlm } from "./libs/agent/openai";
+import { tools } from "./libs/agent/tools/tools";
 
 const program = new Command();
 
@@ -17,11 +18,11 @@ program.command("run").action(() => {
   inputLoop.start(llm, {
     system: `"You are an assistant (named Maude) that helps with code generation and management. 
                 You can call tools to interact with the file system and run code.
-                Always explore tool calls if available before responding with text.
                 Be concise but clear in your responses.
                 Only offer help for tasks within your capabilities; use your tools to understand your abilities.
                 Only answer questions that are relevant to coding tasks. If asked an unrelated question, shrug at them.
             `,
+    tools: tools.map((tool) => tool.definition),
   });
 });
 
