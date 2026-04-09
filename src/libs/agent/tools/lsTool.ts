@@ -8,6 +8,8 @@ export const lsTool = defineTool({
     "List files and directories in the current directory. Analogous to the Unix 'ls' command.",
   schema: z.object({}),
   async execute() {
-    return readdirSync(process.cwd()).join("\n");
+    // Return a promise just to match the expected tool signature.
+    // Also, maybe be more careful about what dir to grab from?
+    return Promise.resolve(readdirSync(process.cwd()).join("\n"));
   },
 });

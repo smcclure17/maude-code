@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import type { Llm, LlmOptions, LlmResponse, Message } from "./Llm";
+import type { Llm, LlmOptions, LlmResponse, Message } from "./llm-helpers";
 
 export class OpenAiLlm implements Llm {
   private client = new OpenAI();

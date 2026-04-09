@@ -1,6 +1,9 @@
+/**
+ * Main entry point for the CLI. Sets up command line and kicks off the agent loop.
+ */
 import { Command } from "commander";
 import { inputLoop } from "./libs/main";
-import { OpenAiLlm } from "./libs/agent/OpenAiLlm";
+import { OpenAiLlm } from "./libs/agent/openai";
 
 const program = new Command();
 

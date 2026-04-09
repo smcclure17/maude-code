@@ -10,6 +10,8 @@ export const weatherTool = defineTool({
       .describe("The city or location to get the weather for."),
   }),
   async execute(input) {
-    return `The current weather in ${input.location} is sunny with a temperature of 65°F.`;
+    const weather = `The current weather in ${input.location} is sunny with a temperature of 65°F.`;
+    // Again, just return a promise to match tool signature for now.
+    return Promise.resolve(weather);
   },
 });

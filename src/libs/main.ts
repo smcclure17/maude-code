@@ -1,5 +1,16 @@
+/**
+ * Main agent loop and entry point for the REPL.
+ *
+ * This is where the agent interacts with the LLM and tools.
+ */
+
 import { start } from "node:repl";
-import { msg, type Llm, type LlmOptions, type Message } from "./agent/Llm";
+import {
+  msg,
+  type Llm,
+  type LlmOptions,
+  type Message,
+} from "./agent/llm-helpers";
 import { tools } from "./agent/tools/tools";
 import { ui } from "./ui";
 
@@ -56,7 +67,10 @@ export const inputLoop = {
       prompt: "> ",
       async eval(raw, _ctx, _file, done) {
         const input = raw.trim();
-        if (!input) return done(null, undefined);
+        if (!input) {
+          done(null, undefined);
+          return;
+        }
 
         messages.push(msg.user(input));
 

@@ -2,6 +2,7 @@
   "name": "maude-code",
   "version": "0.0.1",
   "description": "Simple Agentic AI framework",
+  "type": "module",
   "bin": {
     "maude": "dist/maude.js"
   },
