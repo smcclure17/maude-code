@@ -13,12 +13,15 @@ export const ui = {
         borderColor: "cyan",
         borderStyle: "round",
         backgroundColor: "#004466",
+        width: process.stdout.columns - 4 || 120,
       }) + "\n",
     );
   },
 
   tool(name: string, output: string) {
-    process.stdout.write(chalk.dim(`⚙ ${name}: `) + chalk.gray(output) + "\n");
+    process.stdout.write(
+      chalk.dim(`using tool ${name}: `) + chalk.gray(output) + "\n",
+    );
   },
 
   error(msg: string) {
