@@ -4,10 +4,10 @@
  * Sets up command line and kicks off the agent loop.
  */
 import { Command } from "commander";
-import { inputLoop } from "./libs/main";
+import { start } from "./libs/main";
 import { OpenAiLlm } from "./libs/agent/openai";
-import { tools } from "./libs/agent/tools/tools";
-import { confirmationGuard } from "./libs/agent/tools/confirmationGuard";
+import { tools } from "./libs/tools/tools";
+import { confirmationGuard } from "./libs/toolGuards/confirmationGuard";
 import { io } from "./libs/io";
 
 const program = new Command();
@@ -20,7 +20,7 @@ program
 
 program.command("run").action(() => {
   const llm = new OpenAiLlm();
-  inputLoop.start(llm, tools, guardConfig, io, {
+  start(llm, tools, guardConfig, io, {
     system: `You are an assistant (named Maude) that helps with code generation and management. 
                 You can call tools to interact with the file system and run code.
                 Be concise but clear in your responses.

@@ -3,9 +3,9 @@
  * such as logging, error handling, or access control.
  */
 
-import { ToolDefinition } from "../llm-helpers";
+import { ToolDefinition } from "../agent/llm-helpers";
 
-export type ToolGuardTiming = "before" | "after" | "error";
+export type ToolGuardTiming = "before" | "after";
 
 export interface ToolGuard {
   name: string;
@@ -40,16 +40,16 @@ export interface GuardConfig {
   apply: string[];
 }
 
-export type GuardMap = Record<string, Record<ToolGuardTiming, ToolGuard[]>>;
+export type GuardToolMapping = Record<string, Record<ToolGuardTiming, ToolGuard[]>>;
 
 export function buildToolGuardMap(
   tools: ToolDefinition[],
   guards: GuardConfig[],
-): GuardMap {
-  const map: GuardMap = {};
+): GuardToolMapping {
+  const map: GuardToolMapping = {};
 
   for (const tool of tools) {
-    map[tool.name] = { before: [], after: [], error: [] };
+    map[tool.name] = { before: [], after: [] };
     for (const guard of guards) {
       if (guard.apply.length === 0 || guard.apply.includes(tool.name)) {
         map[tool.name][guard.guard.timing].push(guard.guard);
